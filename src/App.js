@@ -17,7 +17,7 @@ const App = () => {
   };
 
   const openInbox = () => {
-    if(loadingInbox == false){
+    if (loadingInbox === false) {
       setLoadingInbox(true);
     }
     setIsExpanded(false);
@@ -26,7 +26,7 @@ const App = () => {
   };
 
   const openTasks = () => {
-    if(loadingTasks == false){
+    if (loadingTasks === false) {
       setLoadingTasks(true);
     }
     setIsExpanded(false);
@@ -40,11 +40,11 @@ const App = () => {
       <aside className="w-2/12 bg-dark-gray">
       </aside>
       {/* divider */}
-      <div className="w-px bg-white"></div> 
+      <div className="w-px bg-white"></div>
       {/* content */}
       <main className="flex-1 bg-dark-gray text-white">
         <div className="flex items-center bg-gray text-white p-2 h-[58px] w-full">
-          <img src={searchIcon} alt="Search" className="h-4 w-4 mr-2 ml-4" /> 
+          <img src={searchIcon} alt="Search" className="h-4 w-4 mr-2 ml-4" />
           <input
             type="text"
             className="bg-transparent focus:outline-none w-full"
@@ -57,9 +57,9 @@ const App = () => {
             <Tasks showTasks={showTasks} firstOpen={loadingTasks} />
           </div>
           {
-            showInbox || showTasks ? 
+            showInbox || showTasks ?
               <ActiveFloatingButton openTasks={openTasks} openInbox={openInbox} showInbox={showInbox} showTasks={showTasks} />
-            :
+              :
               <FloatingButton isExpanded={isExpanded} openTasks={openTasks} openInbox={openInbox} toggleExpand={toggleExpand} />
           }
         </div>

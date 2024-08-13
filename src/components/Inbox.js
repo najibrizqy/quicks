@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import searchIcon from './../assets/images/search.png';
 
-const Inbox = ({showInbox, firstOpen}) => {
+const Inbox = ({ showInbox, firstOpen }) => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if(firstOpen){
+    if (firstOpen) {
       setTimeout(() => {
         setIsLoading(false)
       }, 1000);
@@ -13,7 +13,7 @@ const Inbox = ({showInbox, firstOpen}) => {
   }, [firstOpen])
 
   return (
-    <div className={`absolute transition-all duration-300 ${showInbox ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'} bg-white p-4 px-6 rounded shadow-lg w-[73vh] h-[75vh] flex flex-col`}>
+    <div className={`absolute transition-all duration-300 ${showInbox ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'} bg-white p-4 px-6 rounded shadow-lg w-[73vh] h-[75vh] max-w-[708px] max-h-[726px] flex flex-col`}>
       <div className="flex rounded-[5px] px-14 justify-between items-center mb-4 border border-gray51">
         <input
           type="text"
@@ -32,12 +32,12 @@ const Inbox = ({showInbox, firstOpen}) => {
               <p className="text-gray text-base mt-4">Loading Chats ...</p>
             </div>
           </div>
-        :
+          :
           <div>
-            
+
           </div>
       }
-    </div> 
+    </div>
   );
 }
 
