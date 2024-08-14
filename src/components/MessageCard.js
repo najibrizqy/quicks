@@ -2,10 +2,10 @@ import React from 'react';
 import personIcon from './../assets/images/person.png';
 import personGrayIcon from './../assets/images/person_gray.png';
 
-const InboxCard = ({data}) => {
+const MessageCard = ({data, openChat}) => {
 
   return ( 
-    <div className="flex flex-col pl-6 pr-8 pt-5 z-50 hover:bg-gray95 cursor-pointer">
+    <div className="flex flex-col pl-6 pr-8 pt-5 z-50 hover:bg-gray95 cursor-pointer" onClick={() => openChat(true)}>
       <div className="relative flex flex-row items-start">
         {
           data.isGroup ?
@@ -43,4 +43,4 @@ const InboxCard = ({data}) => {
   );
 }
 
-export default InboxCard;
+export default MessageCard;
