@@ -113,7 +113,7 @@ const TaskCard = ({data, handleDone, handleDelete}) => {
                                     onKeyDown={handleKeyDown}
                                 />
                             :
-                                <p className="text-sm text-gray ml-5">{description.length > 0 ? description : 'No Description'}</p>
+                                <p className="text-sm text-gray ml-5" onClick={() => setEditDesc(true)} >{description.length > 0 ? description : 'No Description'}</p>
                         }
                     </div>
                 </>

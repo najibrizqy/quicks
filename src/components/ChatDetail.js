@@ -157,7 +157,7 @@ const ChatDetail = ({closeChat}) => {
                             <div className="absolute bottom-10 w-full border border-gray51 border-b-0 rounded-t-[5px] p-3 bg-gray95">
                                 <div className="flex flex-row items-center justify-between">
                                     <p className="text-gray text-xs font-semibold">Replying to {reply.sender}</p>
-                                    <img src={closeIcon} className="w-3 h-3 cursor-pointer" onClick={() => setReply(null)} />
+                                    <img src={closeIcon} alt="close" className="w-3 h-3 cursor-pointer" onClick={() => setReply(null)} />
                                 </div>
                                 <p className="text-gray text-xs mt-1">{reply.content}</p>
                             </div>
