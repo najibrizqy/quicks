@@ -49,6 +49,7 @@ const ChatDetail = ({closeChat}) => {
     const [isLoading, setIsLoading] = useState(true);
     const messagesEndRef = useRef();
 
+
     useEffect(() => {
         setTimeout(() => {
             messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -59,7 +60,7 @@ const ChatDetail = ({closeChat}) => {
     const handleSendMessage = () => {
         if (newMessage.trim() !== "") {
           setMessages([...messages, {
-            id: messages.length + 1,
+            id: messages.length + 2,
             sender: 'You',
             content: newMessage,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false, }),
@@ -76,7 +77,11 @@ const ChatDetail = ({closeChat}) => {
         if (event.key === 'Enter') {
           handleSendMessage();
         }
-      };
+    };
+
+    const handleDeleteMessage = (id) => {
+        setMessages(messages.filter(message => message.id !== id));
+    };
 
     return(
         <>
@@ -107,7 +112,7 @@ const ChatDetail = ({closeChat}) => {
                                     )
                                 }
                                 { 
-                                    index == 4 && (
+                                    index === 4 && (
                                         <div className="flex justify-center items-center text-red font-semibold text-sm mt-4">
                                             <hr className="flex-1 border-red" />
                                             <span className="px-6">New Message</span>
@@ -119,6 +124,7 @@ const ChatDetail = ({closeChat}) => {
                                     data={item}
                                     isSelected={selectedMessageId === item.id} 
                                     onMoreClick={() => setSelectedMessageId(selectedMessageId === item.id ? null : item.id)} 
+                                    onDeleteMessage={handleDeleteMessage}
                                  />
                             </div>
                         )
