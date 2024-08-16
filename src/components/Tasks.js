@@ -4,6 +4,7 @@ import TaskCard from './TaskCard';
 
 const Tasks = ({ showTasks, firstOpen }) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [showCategory, setShowCategory] = useState(false)
   const [listTasks, setListTasks] = useState([
     {
       id: 1, 
@@ -67,12 +68,25 @@ const Tasks = ({ showTasks, firstOpen }) => {
   }
 
   return (
-    <div className={`transition-all duration-300 ${showTasks ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'} bg-white py-4 rounded shadow-lg w-[73vh] h-[75vh] max-w-[708px] max-h-[726px] flex flex-col`}>
+    <div className={`transition-all duration-300 ${showTasks ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'} bg-white pt-4 pb-1 rounded shadow-lg w-[73vh] h-[75vh] max-w-[708px] max-h-[726px] flex flex-col`}>
       <div className="flex rounded-[5px] pl-20 justify-between items-center mb-2 px-6">
-        <button className="w-[118.55px] h-[40px] border border-gray51 rounded-[5px] text-gray font-medium flex flex-row items-end justify-center pb-2.5">
-          My Tasks
-          <img src={downIcon} alt="more" className="w-[20px] h-[20px] ml-1" />
-        </button>
+        <div className="relative">
+          <button className="w-[118.55px] h-[40px] border border-gray51 rounded-[5px] text-gray font-medium flex flex-row items-end justify-center pb-2.5" onClick={() => setShowCategory(!showCategory)}>
+            My Tasks
+            <img src={downIcon} alt="more" className="w-[20px] h-[20px] ml-1" />
+          </button>
+          {
+            showCategory &&
+            <div className="absolute top-12 left-[-60px] w-[288px] h-[80px] z-10 rounded-[5px] border border-gray51 bg-white flex flex-col">  
+              <div className="flex items-center px-4 flex-1 rounded-t-[5px] border-b border-gray51 cursor-pointer hover:bg-light-gray" onClick={() => setShowCategory(false)}>
+                  <p className="text-base text-gray font-medium">Personal Errands</p>
+              </div>
+              <div className="flex items-center px-4 flex-1 rounded-b-[5px] cursor-pointer hover:bg-light-gray" onClick={() => setShowCategory(false)}>
+                  <p className="text-base text-gray font-medium">Urgent To-Do</p>
+              </div> 
+            </div>
+          }
+        </div>
         <button className="w-[98.8px] h-[40px] bg-blue hover:bg-dark-blue text-white font-medium rounded-[5px] break-words">
           New Task
         </button>

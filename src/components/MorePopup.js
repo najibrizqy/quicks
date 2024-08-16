@@ -6,7 +6,7 @@ const MorePopup = forwardRef(({ isUser, onDelete }, ref) => {
             {
                 isUser ?
                 <>
-                     <div className="flex items-center px-4 flex-1 rounded-t-[5px] border-b border-gray74 cursor-pointer hover:bg-light-gray">
+                    <div className="flex items-center px-4 flex-1 rounded-t-[5px] border-b border-gray74 cursor-pointer hover:bg-light-gray">
                         <p className="text-sm text-blue">Edit</p>
                     </div>
                     <div className="flex items-center px-4 flex-1 rounded-b-[5px] cursor-pointer hover:bg-light-gray" onClick={onDelete}>
