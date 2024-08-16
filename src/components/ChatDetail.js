@@ -47,7 +47,9 @@ const ChatDetail = ({closeChat}) => {
     const [selectedMessageId, setSelectedMessageId] = useState(null);
     const [newMessage, setNewMessage] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [reply, setReply] = useState(null);
     const messagesEndRef = useRef();
+    const sendMessageRef = useRef();
 
 
     useEffect(() => {
@@ -65,8 +67,10 @@ const ChatDetail = ({closeChat}) => {
             content: newMessage,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false, }),
             isUser: true,
+            replyContent: reply !== null ? reply.content : '',
           }]);
           setNewMessage("");
+          setReply(null);
           setTimeout(() => {
             messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
           }, 100);
@@ -82,6 +86,11 @@ const ChatDetail = ({closeChat}) => {
     const handleDeleteMessage = (id) => {
         setMessages(messages.filter(message => message.id !== id));
     };
+
+    const handleReply = (data) => {
+        sendMessageRef.current.focus();
+        setReply(data)
+    }
 
     return(
         <>
@@ -125,6 +134,7 @@ const ChatDetail = ({closeChat}) => {
                                     isSelected={selectedMessageId === item.id} 
                                     onMoreClick={() => setSelectedMessageId(selectedMessageId === item.id ? null : item.id)} 
                                     onDeleteMessage={handleDeleteMessage}
+                                    onReply={handleReply}
                                  />
                             </div>
                         )
@@ -141,14 +151,27 @@ const ChatDetail = ({closeChat}) => {
                         </div>
                 }
                 <div className="flex flex-row">
-                    <input
-                        type="text"
-                        placeholder="Type a new message"
-                        className="px-3 text-sm placeholder:text-dark-gray rounded-[5px] py-1 w-full border border-gray51 rounded-[5px] focus:outline-none focus:ring-0 focus:border-gray51 text-black"
-                        value={newMessage}
-                        onChange={e => setNewMessage(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
+                    <div className="relative flex flex-1">
+                        {
+                            reply !== null &&
+                            <div className="absolute bottom-10 w-full border border-gray51 border-b-0 rounded-t-[5px] p-3 bg-gray95">
+                                <div className="flex flex-row items-center justify-between">
+                                    <p className="text-gray text-xs font-semibold">Replying to {reply.sender}</p>
+                                    <img src={closeIcon} className="w-3 h-3 cursor-pointer" onClick={() => setReply(null)} />
+                                </div>
+                                <p className="text-gray text-xs mt-1">{reply.content}</p>
+                            </div>
+                        }
+                        <input
+                            ref={sendMessageRef}
+                            type="text"
+                            placeholder="Type a new message"
+                            className={`px-3 text-sm placeholder:text-dark-gray ${reply !== null ? 'rounded-b-[5px]' : 'rounded-[5px]'} py-1 w-full border border-gray51 focus:outline-none focus:ring-0 focus:border-gray51 text-black`}
+                            value={newMessage}
+                            onChange={e => setNewMessage(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                    </div>
                     <button onClick={handleSendMessage} className="ml-3 w-[76px] h-[40px] bg-blue hover:bg-dark-blue text-sm text-white font-regular rounded-[5px] break-words">Send</button>
                 </div>
             </div>
