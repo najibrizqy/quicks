@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import downIcon from './../assets/images/down.png';
 import TaskCard from './TaskCard';
 
@@ -16,37 +16,30 @@ const Tasks = ({ showTasks, firstOpen }) => {
     },
     {
       id: 2, 
-      title: 'Set up documentation report for several Cases : Case 145443, Case 192829 and Case 182203', 
-      date: new Date(2024, 7, 28), 
-      description: 'All Cases must include all payment transactions, all documents and forms filled. All conversations in comments and messages in channels and emails should be provided as well in.', 
+      title: 'Set up appointment with Dr Blake', 
+      date: new Date(2024, 7, 30), 
+      description: '', 
       isExpanded: true, 
       isDone: false,
     },
     {
       id: 3, 
-      title: 'Set up appointment with Dr Blake', 
-      date: new Date(2024, 7, 30), 
-      description: 'No Description', 
-      isExpanded: true, 
-      isDone: false,
-    },
-    {
-      id: 4, 
       title: 'Contact Mr Caleb - video conference?', 
       date: new Date(2024, 7, 16), 
-      description: 'No Description', 
+      description: '', 
       isExpanded: false, 
       isDone: true,
     },
     {
-      id: 5, 
+      id: 4, 
       title: 'Assign 3 homework to Client A', 
       date: new Date(2024, 7, 15), 
-      description: 'No Description', 
+      description: '', 
       isExpanded: false, 
       isDone: true,
     },
   ])
+  const tasksEndRef = useRef();
 
   useEffect(() => {
     if (firstOpen) {
@@ -66,6 +59,25 @@ const Tasks = ({ showTasks, firstOpen }) => {
     })
     setListTasks(newData)
   }
+
+  const _handleNewTask = () => {
+    const newTask = {
+      id: listTasks.length + 2, 
+      title: '', 
+      date: null, 
+      description: '', 
+      isExpanded: true, 
+      isDone: false,
+    }
+    setListTasks([...listTasks, newTask])
+    setTimeout(() => {
+      tasksEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, 100);
+  }
+
+  const handleDeleteTask = (id) => {
+    setListTasks(listTasks.filter(tasks => tasks.id !== id));
+  };
 
   return (
     <div className={`transition-all duration-300 ${showTasks ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'} bg-white pt-4 pb-1 rounded shadow-lg w-[73vh] h-[75vh] max-w-[708px] max-h-[726px] flex flex-col`}>
@@ -87,7 +99,7 @@ const Tasks = ({ showTasks, firstOpen }) => {
             </div>
           }
         </div>
-        <button className="w-[98.8px] h-[40px] bg-blue hover:bg-dark-blue text-white font-medium rounded-[5px] break-words">
+        <button className="w-[98.8px] h-[40px] bg-blue hover:bg-dark-blue text-white font-medium rounded-[5px] break-words" onClick={_handleNewTask}>
           New Task
         </button>
       </div>
@@ -104,10 +116,11 @@ const Tasks = ({ showTasks, firstOpen }) => {
             {
               listTasks.map(item => {
                 return (
-                  <TaskCard key={item.id} data={item} handleDone={handleDone} />
+                  <TaskCard key={item.id} data={item} handleDone={handleDone} handleDelete={handleDeleteTask} />
                 )
               })
             }
+            <div ref={tasksEndRef} />
           </div>
       }
     </div>
